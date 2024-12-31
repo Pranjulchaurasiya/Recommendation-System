@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(4, 2, 44);
+        }
+        .navbar {
+            background-color: rgb(251, 136, 5);
+            padding: 10px 20px;
+        }
+        .navbar h1 {
+            color: white;
+            margin: 0;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .navbar ul li a:hover {
+            color: rgb(4, 2, 44);
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .btn-custom {
+            background-color: rgb(251, 136, 5);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: rgb(4, 2, 44);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar d-flex align-items-center justify-content-between">
+        <h1>My Book Recommender</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/recommend">Recommend</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" style="color: bisque;">Recommend Books</h1>
+        <form action="/recommend_books" method="POST">
+            <input name="user_input" type="text" class="form-control" placeholder="Enter Book Title"><br>
+            <input type="submit" class="btn btn-lg btn-warning">
+        </form>
+
+        {% if matched_book %}
+            <h3 class="text-center mt-4" style="color: lightgreen;">Results for: "{{ matched_book }}"</h3>
+        {% endif %}
+
+        <div class="row">
+            {% for i in data %}
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ i[2] }}" alt="Book Cover">
+                            <h2 class="text-center">{{ i[0] }}</h2>
+                            <ul class="list-unstyled">
+                                <li><strong>Author:</strong> {{ i[1] }}</li>
+                                <li><strong>Rating:</strong> {{ i[3] }}</li>
+                            </ul>
+                            <div class="text-center mt-2">
+                                <button class="btn-custom">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
